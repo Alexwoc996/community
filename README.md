@@ -1,7 +1,7 @@
 # community
 
->小区物业管理系统
->基于VUE.js的前端项目（暂无后端）
+>小区物业管理系统  
+>基于VUE.js的前端项目（暂无后端）  
 >使用elementui进行界面布局设计
 
 ## Build Setup
