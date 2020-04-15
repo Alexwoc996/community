@@ -47,7 +47,8 @@ export default new Router({
           path: '/index/userPaymentInfo',
           name: '缴费信息',
           component: UserPaymentInfo
-        }
+        },
+
       ]
     },
     {
