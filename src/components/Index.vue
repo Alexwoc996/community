@@ -1,0 +1,97 @@
+<template>
+  <div>
+    <el-container :style="height">
+      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+        <el-menu router :default-openeds="['1', '2', '3']">
+          <el-submenu index="1">
+            <template slot="title"><i class="el-icon-message"></i>普通用户界面</template>
+            <el-menu-item index="/index/userIndex">用户首页</el-menu-item>
+            <el-menu-item index="/index/loginform">登录界面</el-menu-item>
+            <el-menu-item index="/index/registerform">注册界面</el-menu-item>
+            <el-menu-item index="/index/userInfo">用户个人信息</el-menu-item>
+            <el-menu-item index="/index/userPaymentInfo">缴费信息</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title"><i class="el-icon-menu"></i>管理员界面</template>
+            <el-menu-item index="/index/userList">用户列表</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title"><i class="el-icon-setting"></i>测试界面</template>
+            <el-menu-item index="/index/page1">page1</el-menu-item>
+            <el-menu-item index="/index/page2">page2</el-menu-item>
+            <el-menu-item index="/index/page3">page3</el-menu-item>
+            <el-menu-item index="/index/page4">page4</el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+
+      <el-container>
+        <el-header style="text-align: center; font-size: 15px">
+          <el-row type="flex"  justify="space-between">
+            <el-col :span="6"><div></div></el-col>
+            <el-col :span="6"><div style="text-align: center; font-size: 30px">XX小区物业管理系统</div></el-col>
+            <el-col :span="6">
+              <div style="text-align: right">
+                <span>欢迎！王小虎</span>
+                <el-dropdown>
+                  <i class="el-icon-setting" style="margin-right: 15px"></i>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item @click.native="gotoUserInfo">个人信息</el-dropdown-item>
+                    <el-dropdown-item @click.native="gotoRegister">用户注册</el-dropdown-item>
+                    <el-dropdown-item @click.native="gotoLogin">退出登录</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </div>
+            </el-col>
+          </el-row>
+        </el-header>
+
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        height:{height:''},
+      }
+    },
+    methods:{
+      gotoLogin(){
+        this.$router.replace('/index/loginform')
+      },
+      gotoRegister(){
+        this.$router.replace('/index/registerform')
+      },
+      gotoUserInfo(){
+        this.$router.replace('/index/userInfo')
+      },
+      getHeight(){
+        this.height.height=window.innerHeight-16+'px';
+      }
+    },    created(){
+      window.addEventListener('resize', this.getHeight);
+      this.getHeight()
+    },
+    destroyed(){
+      window.removeEventListener('resize', this.getHeight)
+    },
+  }
+</script>
+
+<style>
+  .el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 60px;
+  }
+  .el-aside {
+    color: #333;
+  }
+</style>
