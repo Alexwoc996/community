@@ -28,7 +28,22 @@
         </el-row>
         <el-row>
           <el-col span="8">
-            <el-form-item label="密码" prop="pass">
+            <el-form-item label="性别" prop="sex">
+              <el-radio-group v-model="ruleForm.sex">
+                <el-radio label="male" :disabled="true">男</el-radio>
+                <el-radio label="female" :disabled="true">女</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col span="8">
+            <el-form-item label="年 龄" prop="age">
+              <el-input v-model="ruleForm.age" :disabled="true"><template slot="append">岁</template></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col span="8">
+            <el-form-item label="密 码" prop="pass">
               <el-input type="password" v-model="ruleForm.pass" autocomplete="off" show-password></el-input>
             </el-form-item>
           </el-col>
@@ -41,18 +56,7 @@
         <el-row>
           <el-col span="8">
             <el-form-item label="住所" prop="address">
-              <el-row>
-                <el-col span="12">
-                  <el-input v-model="ruleForm.address1">
-                    <template slot="append">号楼</template>
-                  </el-input>
-                </el-col>
-                <el-col span="12">
-                  <el-input placeholder="" v-model="ruleForm.address2">
-                    <template slot="append">室</template>
-                  </el-input>
-                </el-col>
-              </el-row>
+              <el-cascader :options="options" clearable></el-cascader>
             </el-form-item>
           </el-col>
           <el-col span="8">
@@ -62,16 +66,23 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item label="房屋性质" prop="housekind">
-            <el-radio-group v-model="ruleForm.housekind">
-              <el-radio label="buy">已购房屋</el-radio>
-              <el-radio label="rent">租赁房屋</el-radio>
-            </el-radio-group>
-          </el-form-item>
+          <el-col span="8">
+            <el-form-item label="房屋性质" prop="housekind">
+              <el-radio-group v-model="ruleForm.housekind">
+                <el-radio label="buy" >已购房屋</el-radio>
+                <el-radio label="rent">租赁房屋</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col span="8">
+            <el-form-item label="到期日期" prop="overdueDate">
+              <el-date-picker v-model="overdueDate" type="month" placeholder="选择日期"></el-date-picker>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-col span="8">
-            <el-form-item v-model="radioTreaty" label="车库" prop="garage" @change="garageChange">
+            <el-form-item v-model="radioTreaty" label="车库" prop="garage">
               <el-radio-group v-model="ruleForm.garage">
                 <el-radio label="1">有</el-radio>
                 <el-radio label="2">无</el-radio>
@@ -79,7 +90,7 @@
             </el-form-item>
           </el-col>
           <el-col span="8">
-            <el-form-item label="车库号" prop="garageID" v-show="garageIDStatus">
+            <el-form-item label="车库号" prop="garageID" v-show="ruleForm.garage == 1">
               <el-input v-model="ruleForm.garageID"></el-input>
             </el-form-item>
           </el-col>
@@ -110,19 +121,19 @@
           }
         }
       };
-      var checkEmail = (rule, value, callback) => {
-        const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-        if (!value) {
-          return callback(new Error('请输入邮箱'))
-        }
-        setTimeout(() => {
-          if (mailReg.test(value)) {
-            callback()
-          } else {
-            callback(new Error('请输入正确的邮箱格式'))
-          }
-        }, 100)
-      };
+      // var checkEmail = (rule, value, callback) => {
+      //   const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+      //   if (!value) {
+      //     return callback(new Error('请输入邮箱'))
+      //   }
+      //   setTimeout(() => {
+      //     if (mailReg.test(value)) {
+      //       callback()
+      //     } else {
+      //       callback(new Error('请输入正确的邮箱格式'))
+      //     }
+      //   }, 100)
+      // };
       var checkIDcard = (rule, value, callback) => {
         if (!value) {
           return new Error("请输入身份证号)");
@@ -130,10 +141,16 @@
           var reg = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[0-2])(([0-2][1-9])|10|20|30|31)\d{3}(\d|X|x)$/;
           var card = reg.test(value);
           if (!card) {
-            //判断座机为12位
-            callback(new Error("请检查身份证格式"));
+            callback(new Error("请检查身份证格式，性别与年龄将自动填写"));
           } else {
             callback();
+            if(value.substring(16,17) % 2 == 0){
+              this.ruleForm.sex = 'female'
+            }else {
+              this.ruleForm.sex = 'male'
+            }
+            let myDate = new Date();
+            this.ruleForm.age = myDate.getFullYear() - value.substring(6,10) -1;
           }
         }
       };
@@ -159,12 +176,27 @@
       return {
         userScore:'',
         radioTreaty:'1',
-        garageIDStatus:true,
+        overdueDate: '',
+        options: [{
+          value: 'A1',
+          label: 'A1号楼',
+          children: [{value: 'A1101', label: '101室'},{value: 'A1102', label: '102室'},{value: 'A1103', label: '103室'},]
+        },{
+          value: 'A2',
+          label: 'A2号楼',
+          children: [{value: 'A2101', label: '101室'},{value: 'A2102', label: '102室'},{value: 'A2103', label: '103室'},]
+        },{
+          value: 'A3',
+          label: 'A3号楼',
+          children: [{value: 'A3101', label: '101室'},{value: 'A3102', label: '102室'},{value: 'A3103', label: '103室'},]
+        }],
         ruleForm: {
           username: '',//用户名
           phonenumber:'',//手机号
           email: '',//邮箱
           IDcard: '',//身份证号
+          sex: '',//性别
+          age: '',//年龄
           pass: '',//密码
           checkPass: '',//确认密码
           address1: '',//几号楼
@@ -189,7 +221,7 @@
             // { validator: checkEmail, trigger: 'blur' }
           ],
           IDcard: [
-            { required: true, message: '请输入身份证号', trigger: 'blur' },
+            { required: true, message: '请输入身份证号，性别与年龄将自动填写', trigger: 'blur' },
             { validator: checkIDcard, trigger: 'blur' }
           ],
           pass: [
@@ -215,6 +247,7 @@
           garage: [
             { required: true, message: '请选择是否拥有车库', trigger: 'change' },
           ],
+
         }
       };
     },
@@ -222,7 +255,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            alert('注册成功!');
           } else {
             console.log('error submit!!');
             return false;
@@ -232,10 +265,6 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      garageChange:function(val){
-        let that = this
-        that.garageIDStatus=(val==='have')?true:false;
-      }
     }
   }
 </script>

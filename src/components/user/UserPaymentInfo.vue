@@ -7,6 +7,7 @@
       </el-table-column>
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="money" label="金额"></el-table-column>
+      <el-table-column prop="amount" label="用量"></el-table-column>
       <el-table-column prop="paymentStatus" label="缴费状态"></el-table-column>
       <el-table-column prop="paymentTime" label="缴费日期"></el-table-column>
       <el-table-column prop="fine" label="滞纳金"></el-table-column>

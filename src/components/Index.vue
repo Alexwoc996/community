@@ -2,7 +2,7 @@
   <div>
     <el-container :style="height">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu router :default-openeds="['1', '2', '3']">
+        <el-menu router :default-openeds="['1', '2']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>普通用户界面</template>
             <el-menu-item index="/index/userIndex">用户首页</el-menu-item>
@@ -10,10 +10,15 @@
             <el-menu-item index="/index/registerform">注册界面</el-menu-item>
             <el-menu-item index="/index/userInfo">用户个人信息</el-menu-item>
             <el-menu-item index="/index/userPaymentInfo">缴费信息</el-menu-item>
+            <el-menu-item index="/index/userComplaint">投诉信息</el-menu-item>
+            <el-menu-item index="/index/userRepair">报修信息</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-menu"></i>管理员界面</template>
+            <el-menu-item index="/index/adminIndex">管理员首页</el-menu-item>
+            <el-menu-item index="/index/adminList">管理员列表</el-menu-item>
             <el-menu-item index="/index/userList">用户列表</el-menu-item>
+            <el-menu-item index="/index/houseList">楼栋管理</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title"><i class="el-icon-setting"></i>测试界面</template>
@@ -28,8 +33,8 @@
       <el-container>
         <el-header style="text-align: center; font-size: 15px">
           <el-row type="flex"  justify="space-between">
-            <el-col :span="6"><div></div></el-col>
-            <el-col :span="6"><div style="text-align: center; font-size: 30px">XX小区物业管理系统</div></el-col>
+            <el-col :span="4"><div></div></el-col>
+            <el-col :span="8"><div style="text-align: center; font-size: 30px">XX小区物业管理系统</div></el-col>
             <el-col :span="6">
               <div style="text-align: right">
                 <span>欢迎！王小虎</span>

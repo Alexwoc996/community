@@ -9,9 +9,13 @@ import LoginForm from "@/components/user/LoginForm";
 import RegisterForm from "@/components/user/RegisterForm";
 import UserInfo from "@/components/user/UserInfo";
 import UserIndex from "@/components/user/UserIndex";
+import UserPaymentInfo from "@/components/user/UserPaymentInfo";
+import UserComplaint from "@/components/user/UserComplaint";
+import UserRepair from "@/components/user/UserRepair";
 import UserList from "@/components/administrator/UserList";
 import HouseList from "@/components/administrator/HouseList";
-import UserPaymentInfo from "@/components/user/UserPaymentInfo";
+import AdminIndex from "@/components/administrator/AdminIndex";
+import AdminList from "@/components/administrator/AdminList";
 
 Vue.use(Router)
 
@@ -48,6 +52,16 @@ export default new Router({
           name: '缴费信息',
           component: UserPaymentInfo
         },
+        {
+          path: '/index/userComplaint',
+          name: '投诉信息',
+          component: UserComplaint
+        },
+        {
+          path: '/index/userRepair',
+          name: '报修信息',
+          component: UserRepair
+        }
 
       ]
     },
@@ -56,6 +70,16 @@ export default new Router({
       name: '管理员界面',
       component: Index,
       children: [
+        {
+          path: '/index/adminIndex',
+          name: '管理员首页',
+          component: AdminIndex
+        },
+        {
+          path: '/index/adminList',
+          name: '管理员列表',
+          component: AdminList
+        },
         {
           path: '/index/userList',
           name: '用户列表',

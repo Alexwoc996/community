@@ -55,14 +55,14 @@
       <el-row>
         <el-col span="8">
           <el-form-item v-model="radioTreaty" label="车库" prop="garage">
-            <el-radio-group v-model="ruleForm.garage" @change="garageChange">
+            <el-radio-group v-model="ruleForm.garage">
               <el-radio label="1" :disabled="modify">有</el-radio>
               <el-radio label="2" :disabled="modify">无</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col span="8">
-          <el-form-item label="车库号" prop="garageID" v-show="garageIDStatus">
+          <el-form-item label="车库号" prop="garageID" v-show="this.ruleForm.garage == 1">
             <el-input v-model="ruleForm.garageID" :disabled="modify"></el-input>
           </el-form-item>
         </el-col>
@@ -70,16 +70,15 @@
       <el-row>
         <el-table :data="tableData" style="width: 100%">
           <el-table-column label="家庭成员">
-            <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-            <el-table-column prop="relationship" label="与户主关系" width="120"></el-table-column>
-            <el-table-column prop="age" label="年龄" width="120"></el-table-column>
-            <el-table-column prop="sex" label="性别" width="120"></el-table-column>
-            <el-table-column prop="IDcard" label="身份证号" width="200"></el-table-column>
+            <el-table-column prop="name" label="姓名"></el-table-column>
+            <el-table-column prop="relationship" label="与户主关系"></el-table-column>
+            <el-table-column prop="age" label="年龄"></el-table-column>
+            <el-table-column prop="sex" label="性别"></el-table-column>
+            <el-table-column prop="IDcard" label="身份证号"></el-table-column>
           </el-table-column>
           <el-table-column v-if="!modify">
             <template slot="header" slot-scope="scope">
-              <el-button size="mini" @click="addFamilyFormVisible=true">添加家庭成员</el-button>
-
+              <el-button type="text" @click="addFamilyFormVisible=true">添加家庭成员</el-button>
               <el-dialog title="添加家庭成员" :visible.sync="addFamilyFormVisible" :close-on-click-modal="false">
                 <el-form>
                   <el-form-item label="姓名" :label-width="formLabelWidth">
@@ -102,7 +101,34 @@
             <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                 <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+
+                <el-dialog title="编辑家人信息" :visible.sync="familyInfoFormVisible" :close-on-click-modal="false">
+                  <el-form>
+                    <el-form-item label="姓名" :label-width="formLabelWidth">
+                      <el-input v-model="ruleForm.changeFamilyName" autocomplete="off" style="height: 50px"></el-input>
+                    </el-form-item>
+                    <el-form-item label="与户主关系" :label-width="formLabelWidth">
+                      <el-input v-model="ruleForm.changeFamilyRelationship" autocomplete="off" style="height: 50px"></el-input>
+                    </el-form-item>
+                    <el-form-item label="身份证号" :label-width="formLabelWidth">
+                      <el-input v-model="ruleForm.changeFamilyIDcard" autocomplete="off" style="height: 50px"></el-input>
+                    </el-form-item>
+                  </el-form>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="familyInfoFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="changeFamilyInfo">确 定</el-button>
+                  </div>
+                </el-dialog>
+
+                <el-popover placement="top" width="160" v-model="visible">
+                  <p>该操作将永久删除该用户信息，确认要删除吗？</p>
+                  <div style="text-align: right; margin: 0">
+                    <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                    <el-button type="primary" size="mini" @click="visible = false">确定</el-button>
+                  </div>
+                  <el-button slot="reference" size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                </el-popover>
+
               </template>
             </el-table-column>
           </el-table-column>
@@ -187,32 +213,39 @@
         }
       };
       return {
-        tableData: [{name: '王大虎', relationship:'本人', age:'35', sex:'男', IDcard:'370522197402201872'},
-                    {name: '王虎妻', relationship:'配偶', age:'33', sex:'女', IDcard:'370522197402201872'},
-                    {name: '王小虎', relationship:'父子', age:'18', sex:'男', IDcard:'370522197402201872'}],
+        tableData: [{name: '王大虎', relationship:'本人', phoneNumber:'13599999999', age:'35', sex:'男', IDcard:'370522197402201872'},
+                    {name: '王虎妻', relationship:'配偶', phoneNumber:'13599999999', age:'33', sex:'女', IDcard:'370522197402201872'},
+                    {name: '王小虎', relationship:'父子', phoneNumber:'13599999999', age:'18', sex:'男', IDcard:'370522197402201872'}],
         userScore:'',
         radioTreaty:'1',
         garageIDStatus:true,
         modify:true,
         changePasswordFormVisible:false,
+        familyInfoFormVisible:false,
         addFamilyFormVisible:false,
+        visible:false,
         formLabelWidth:'100px',
         ruleForm: {
-          username: '李立坤',//用户名
-          phonenumber:'17863110517',//手机号
-          email: 'liwenhao2098@gmail.com',//邮箱
-          IDcard: '370522199803111872',//身份证号
-          address1: 'A1',//几号楼
-          address2: '301',//几几室
-          housekind: 'buy',//房屋性质
-          garage: '1',//车库
-          garageID: '301',//车库号
+          username: '',//用户名
+          phonenumber:'',//手机号
+          email: '',//邮箱
+          IDcard: '',//身份证号
+          address1: '',//几号楼
+          address2: '',//几几室
+          housekind: '',//房屋性质
+          garage: '',//车库
+          garageID: '',//车库号
           oldPassword:'',
           newPassword:'',
           confirmNewPassword:'',
           newFamilyName:'',
           newFamilyRelationship:'',
           newFamilyIDcard:'',
+          changeFamilyName:'',
+          changeFamilyRelationship:'',
+          changeFamilyIDcard:'',
+          editIndex: '',
+
         },
         rules: {
           phonenumber: [
@@ -265,8 +298,19 @@
       };
     },
     methods: {
+      changeFamilyInfo(){
+        this.tableData[this.ruleForm.editIndex].name = this.ruleForm.changeFamilyName;
+        this.tableData[this.ruleForm.editIndex].relationship = this.ruleForm.changeFamilyRelationship;
+        this.tableData[this.ruleForm.editIndex].IDcard = this.ruleForm.changeFamilyIDcard;
+        this.familyInfoFormVisible = false;
+      },
       handleEdit(index, row) {
-        console.log(index, row);
+        this.ruleForm.changeFamilyName=this.tableData[index].name;
+        this.ruleForm.changeFamilyRelationship=this.tableData[index].relationship;
+        this.ruleForm.changeFamilyIDcard=this.tableData[index].IDcard;
+        this.familyInfoFormVisible = true;
+        this.ruleForm.editIndex = index;
+        // console.log(index, row);
       },
       handleDelete(index, row) {
         console.log(index, row);
@@ -285,10 +329,11 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      garageChange:function(val){
-        let that = this
-        that.garageIDStatus=(val==='have')?true:false;
-      }
+    },
+    mounted() {
+      this.ruleForm.username=this.tableData[0].name;
+      this.ruleForm.phonenumber=this.tableData[0].phoneNumber;
+      this.ruleForm.IDcard=this.tableData[0].IDcard;
     }
   }
 </script>
