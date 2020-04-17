@@ -5,6 +5,7 @@ import PageOne from "@/components/PageOne";
 import PageTwo from "@/components/PageTwo";
 import PageThree from "@/components/PageThree";
 import PageFour from "@/components/PageFour";
+
 import LoginForm from "@/components/user/LoginForm";
 import RegisterForm from "@/components/user/RegisterForm";
 import UserInfo from "@/components/user/UserInfo";
@@ -12,10 +13,14 @@ import UserIndex from "@/components/user/UserIndex";
 import UserPaymentInfo from "@/components/user/UserPaymentInfo";
 import UserComplaint from "@/components/user/UserComplaint";
 import UserRepair from "@/components/user/UserRepair";
+
 import UserList from "@/components/administrator/UserList";
+import RegisterVerify from "@/components/administrator/RegisterVerify";
 import HouseList from "@/components/administrator/HouseList";
 import AdminIndex from "@/components/administrator/AdminIndex";
 import AdminList from "@/components/administrator/AdminList";
+import ComplaintManage from "@/components/administrator/ComplaintManage";
+import RepairManage from "@/components/administrator/RepairManage";
 
 Vue.use(Router)
 
@@ -84,6 +89,21 @@ export default new Router({
           path: '/index/userList',
           name: '用户列表',
           component: UserList
+        },
+        {
+          path: '/index/registerVerify',
+          name: '用户注册审核',
+          component: RegisterVerify
+        },
+        {
+          path: '/index/complaintManage',
+          name: '投诉管理',
+          component: ComplaintManage
+        },
+        {
+          path: '/index/repairManage',
+          name: '报修管理',
+          component: RepairManage
         },
         {
           path: '/index/houseList',

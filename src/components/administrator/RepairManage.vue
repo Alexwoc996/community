@@ -1,13 +1,16 @@
 <template>
   <div>
     <h1>用户报修信息</h1>
-    <el-table ref="filterTable" :data="tableData" style="width: 100%" border>
-      <el-table-column label="历史报修信息">
+    <el-table ref="filterTable" :data="tableData" style="width: 100%;text-align: center" border>
+      <el-table-column label="用户报修信息">
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="报修日期">
                 <span>{{ props.row.date }}</span>
+              </el-form-item>
+              <el-form-item label="报修人">
+                <span>{{ props.row.userName }}</span>
               </el-form-item>
               <el-form-item label="报修内容">
                 <span>{{ props.row.content }}</span>
@@ -18,10 +21,10 @@
               <el-form-item label="报修状态">
                 <span>{{ props.row.complaintStatus }}</span>
               </el-form-item>
-              <el-form-item label="维修人员">
+              <el-form-item label="处理人">
                 <span>{{ props.row.Handler }}</span>
               </el-form-item>
-              <el-form-item label="维修员备注">
+              <el-form-item label="处理人备注">
                 <span>{{ props.row.Remarks }}</span>
               </el-form-item>
               <el-form-item label="用户反馈">
@@ -30,8 +33,9 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column prop="date" label="报修日期" sortable>
+        <el-table-column prop="date" label="报修日期" sortable >
         </el-table-column>
+        <el-table-column prop="userName" label="报修人"></el-table-column>
         <el-table-column prop="content" label="报修内容" width="300%"></el-table-column>
         <el-table-column prop="tag" label="报修类型" :filters="labelList"
                          :filter-method="filterTag" filter-placement="bottom-end">
@@ -45,48 +49,22 @@
             <el-tag :type="scope.row.complaintStatus === '已处理' ? 'primary' : 'danger'" disable-transitions>{{scope.row.complaintStatus}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="Handler" label="维修人员"></el-table-column>
-      </el-table-column>
-      <el-table-column>
-        <template slot="header" slot-scope="scope">
-          <el-button type="text" @click="repairInfoFormVisible = true">我要报修</el-button>
-          <el-dialog title="编辑报修信息" :visible.sync="repairInfoFormVisible" :close-on-click-modal="false">
-            <el-form>
-              <el-form-item label="报修内容" :label-width="formLabelWidth">
-                <!--                <el-input v-model="ruleForm.changeFamilyName" autocomplete="off" style="height: 50px"></el-input>-->
-                <el-input type="textarea" :rows="2" placeholder="请输入报修内容" v-model="complaintContent">
-                </el-input>
-              </el-form-item>
-              <el-form-item label="报修类型" :label-width="formLabelWidth">
-                <el-select v-model="value" placeholder="请选择报修类型">
-                  <el-option-group v-for="group in options" :key="group.label" :label="group.label">
-                    <el-option v-for="item in group.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                  </el-option-group>
-                </el-select>
-              </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="repairInfoFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="repairInfoFormVisible = false">确 定</el-button>
-            </div>
-          </el-dialog>
-        </template>
-        <el-table-column label="操作" width="200">
+        <el-table-column prop="Handler" label="处理人"></el-table-column>
+        <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" type="danger" @click="handleFeedback(scope.$index, scope.row)">反馈</el-button>
-            <el-dialog title="报修反馈" :visible.sync="feedbackFormVisible" :close-on-click-modal="false">
+            <el-button size="mini" type="danger" @click="handle(scope.$index, scope.row)">处理</el-button>
+
+            <el-dialog title="报修处理" :visible.sync="handleFormVisible" :close-on-click-modal="false">
               <el-form>
-                <el-form-item label="请为本次服务评分" :label-width="120">
-                  <el-rate v-model="star" @change=""></el-rate>
-                </el-form-item>
+                <el-form-item><p>请确认该报修已处理完成后再提交！</p></el-form-item>
                 <el-form-item label="备注" :label-width="formLabelWidth">
-                  <el-input type="textarea" :rows="2" placeholder="请输入反馈备注"v-model="feedbackContent" autocomplete="off" style="height: 50px"></el-input>
+                  <el-input type="textarea" :rows="2" placeholder="请输入处理备注"v-model="feedbackContent" autocomplete="off" style="height: 50px"></el-input>
                 </el-form-item>
 
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button @click="feedbackFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="feedbackFormVisible = false">确 定</el-button>
+                <el-button @click="handleFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="handleFormVisible = false">确 定</el-button>
               </div>
             </el-dialog>
 
@@ -101,9 +79,9 @@
   export default {
     data() {
       return {
-        formLabelWidth:'100px',
-        repairInfoFormVisible:false,
-        feedbackFormVisible: false,
+        formLabelWidth:'40px',
+        complaintInfoFormVisible:false,
+        handleFormVisible: false,
         complaintContent: '',//投诉内容
         complaintKind:'',//投诉类型
         star: null,//评分
@@ -111,26 +89,20 @@
         tableData: [],
         labelList: [],
         complaintStatus: [{text: '已处理', value: '已处理'},{text: '未处理', value: '未处理'}],
-        search: '',
-        options: [{label: '公共部位报修', options: [{value: 'Shanghai', label: '公共建筑报修'},
-            {value: 'Beijing', label: '公共区域报修'},{value: 'other', label: '其他'}]},
-          {label: '自用部位报修', options: [{value: 'Chengdu', label: '门窗报修'},
-              {value: 'Shenzhen', label: '管线包修'}, {value: 'Guangzhou', label: '其他'}]
-          }],
-        value: ''
+        search: ''
       }
     },
     mounted() {
       this.getData();
     },
     methods: {
-      handleFeedback(index, row) {
+      handle(index, row) {
         console.log(index, row);
-        if(this.tableData[index].complaintStatus == '已处理'){
-          this.feedbackFormVisible = true;
+        if(this.tableData[index].complaintStatus == '未处理'){
+          this.handleFormVisible = true;
         }else {
           this.$message({
-            message: '报修未处理，请等待处理后再反馈！',
+            message: '该报修已被管理员'+this.tableData[index].Handler+'处理！',
             center: true,
             type: 'warning'
           });

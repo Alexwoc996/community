@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-container :style="height">
+
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <el-menu router :default-openeds="['1', '2']">
           <el-submenu index="1">
@@ -18,6 +19,9 @@
             <el-menu-item index="/index/adminIndex">管理员首页</el-menu-item>
             <el-menu-item index="/index/adminList">管理员列表</el-menu-item>
             <el-menu-item index="/index/userList">用户列表</el-menu-item>
+            <el-menu-item index="/index/registerVerify">注册审核</el-menu-item>
+            <el-menu-item index="/index/complaintManage">投诉管理</el-menu-item>
+            <el-menu-item index="/index/repairManage">报修管理</el-menu-item>
             <el-menu-item index="/index/houseList">楼栋管理</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
@@ -31,6 +35,7 @@
       </el-aside>
 
       <el-container>
+
         <el-header style="text-align: center; font-size: 15px">
           <el-row type="flex"  justify="space-between">
             <el-col :span="4"><div></div></el-col>
@@ -54,7 +59,9 @@
         <el-main>
           <router-view></router-view>
         </el-main>
+
       </el-container>
+
     </el-container>
 
   </div>

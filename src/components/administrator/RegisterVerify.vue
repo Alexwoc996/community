@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>用户信息列表</h1>
+    <h1>注册用户信息列表</h1>
     <el-table
       :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       stripe border height="500" style="width: 100%">
@@ -52,9 +52,11 @@
             placeholder="输入用户姓名搜索"/>
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-popconfirm title="该操作将永久删除该用户，确定要删除吗？" @onConfirm="handleDelete(scope.$index, scope.row)">
-            <el-button slot="reference" size="mini" type="danger">删除</el-button>
+          <el-popconfirm title="确定通过该注册申请吗？" @onConfirm="handleEdit(scope.$index, scope.row)">
+            <el-button size="mini" slot="reference">通过</el-button>
+          </el-popconfirm>
+          <el-popconfirm title="确定拒绝该注册申请吗？" @onConfirm="handleDelete(scope.$index, scope.row)">
+            <el-button size="mini" type="danger" slot="reference">拒绝</el-button>
           </el-popconfirm>
 
         </template>
@@ -124,6 +126,11 @@
     methods: {
       handleEdit(index, row) {
         console.log(index, row);
+        this.tableData.splice(index,1);
+        this.$message({
+          message: '已通过该注册申请，消息已发送至用户邮箱',
+          type: 'success'
+        });
       },
       handleDelete(index, row) {
         console.log(index, row);
