@@ -6,7 +6,7 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="报修日期">
+              <el-form-item label="报修时间">
                 <span>{{ props.row.date }}</span>
               </el-form-item>
               <el-form-item label="报修人">
@@ -21,6 +21,9 @@
               <el-form-item label="报修状态">
                 <span>{{ props.row.complaintStatus }}</span>
               </el-form-item>
+              <el-form-item label="处理时间">
+                <span>{{ props.row.date }}</span>
+              </el-form-item>
               <el-form-item label="处理人">
                 <span>{{ props.row.Handler }}</span>
               </el-form-item>
@@ -33,10 +36,10 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column prop="date" label="报修日期" sortable >
+        <el-table-column prop="date" label="报修时间" sortable >
         </el-table-column>
         <el-table-column prop="userName" label="报修人"></el-table-column>
-        <el-table-column prop="content" label="报修内容" width="300%"></el-table-column>
+        <el-table-column prop="content" label="报修内容" width="250%"></el-table-column>
         <el-table-column prop="tag" label="报修类型" :filters="labelList"
                          :filter-method="filterTag" filter-placement="bottom-end">
           <template slot-scope="scope">

@@ -43,22 +43,26 @@
       <el-table-column label="用户姓名" prop="name"></el-table-column>
       <el-table-column label="住址" prop="address"></el-table-column>
       <el-table-column label="身份证号" prop="IDcard"></el-table-column>
-      <el-table-column
-        align="right">
+      <el-table-column>
         <template slot="header" slot-scope="scope">
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="输入用户姓名搜索"/>
+          <el-input v-model="search" size="mini" placeholder="输入用户姓名搜索"/>
         </template>
         <template slot-scope="scope">
           <el-popconfirm title="确定通过该注册申请吗？" @onConfirm="handleEdit(scope.$index, scope.row)">
             <el-button size="mini" slot="reference">通过</el-button>
           </el-popconfirm>
-          <el-popconfirm title="确定拒绝该注册申请吗？" @onConfirm="handleDelete(scope.$index, scope.row)">
-            <el-button size="mini" type="danger" slot="reference">拒绝</el-button>
-          </el-popconfirm>
-
+          <el-button size="mini" type="danger" @click="verifyFormVisible=true">拒绝</el-button>
+          <el-dialog title="审核未通过" :visible.sync="verifyFormVisible" :close-on-click-modal="false">
+            <el-form>
+              <el-form-item label="拒绝理由" :label-width="formLabelWidth">
+                <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="refuse"></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="verifyFormVisible = false">取 消</el-button>
+              <el-button type="primary" @click="handleDelete(scope.$index, scope.row)">确 定</el-button>
+            </div>
+          </el-dialog>
         </template>
       </el-table-column>
     </el-table>
@@ -70,6 +74,9 @@
   export default {
     data() {
       return {
+        formLabelWidth: '100px',
+        verifyFormVisible: false,
+        refuse: '',
         tableData: [{
           name: '王大虎',
           address: 'A3号楼301室',
@@ -133,8 +140,13 @@
         });
       },
       handleDelete(index, row) {
+        this.verifyFormVisible=false;
         console.log(index, row);
         this.tableData.splice(index,1);
+        this.$message({
+          message: '已拒绝该注册申请，消息已发送至用户邮箱',
+          type: 'warning'
+        });
       }
     },
   }

@@ -21,6 +21,9 @@
               <el-form-item label="投诉状态">
                 <span>{{ props.row.complaintStatus }}</span>
               </el-form-item>
+              <el-form-item label="处理时间">
+                <span>{{ props.row.date }}</span>
+              </el-form-item>
               <el-form-item label="处理人">
                 <span>{{ props.row.Handler }}</span>
               </el-form-item>
@@ -36,7 +39,7 @@
         <el-table-column prop="date" label="投诉日期" sortable>
         </el-table-column>
         <el-table-column prop="userName" label="投诉人"></el-table-column>
-        <el-table-column prop="content" label="投诉内容" width="300%"></el-table-column>
+        <el-table-column prop="content" label="投诉内容" width="250%"></el-table-column>
         <el-table-column prop="tag" label="投诉类型" :filters="labelList"
                          :filter-method="filterTag" filter-placement="bottom-end">
           <template slot-scope="scope">

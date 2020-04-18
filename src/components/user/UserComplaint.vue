@@ -24,6 +24,9 @@
               <el-form-item label="处理人备注">
                 <span>{{ props.row.Remarks }}</span>
               </el-form-item>
+              <el-form-item label="处理时间">
+                <span>{{ props.row.date }}</span>
+              </el-form-item>
               <el-form-item label="用户反馈">
                 <span>{{ props.row.feedback }}</span>
               </el-form-item>

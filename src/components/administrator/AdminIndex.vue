@@ -58,6 +58,7 @@
   export default {
     data(){
       return{
+        workStatus:'out',
         time: '',//日期时间
         weatherDate: {
           cityid: "",//城市id
@@ -87,18 +88,35 @@
         return Y + M + D + h + m + s
       },
       clockin() {
-        this.$notify({
-          title: '提示',
-          message: '上班打卡成功，打卡时间'+this.getNowTime(),
-          duration: 0
-        });
+        if(this.workStatus == 'out'){
+          this.workStatus = 'in';
+          this.$notify({
+            title: '提示',
+            message: '上班打卡成功，打卡时间'+this.getNowTime(),
+            duration: 3000
+          });
+        }else {
+          this.$message({
+            message: '您已上班，请勿重复打卡',
+            type: 'warning'
+          });
+        }
       },
       clockout() {
-        this.$notify({
-          title: '提示',
-          message: '下班打卡成功，打卡时间'+this.getNowTime(),
-          duration: 0
-        });
+        if(this.workStatus == 'in'){
+          this.workStatus = 'out';
+          this.$notify({
+            title: '提示',
+            message: '下班打卡成功，打卡时间'+this.getNowTime(),
+            duration: 3000
+          });
+        }else {
+          this.$message({
+            message: '您已下班，请勿重复打卡',
+            type: 'warning'
+          });
+        }
+
       },
       getWeather(){
         this.$axios.get('https://www.tianqiapi.com/free/day?appid=23556931&appsecret=bO8ROSrK')

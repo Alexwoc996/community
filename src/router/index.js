@@ -21,6 +21,7 @@ import AdminIndex from "@/components/administrator/AdminIndex";
 import AdminList from "@/components/administrator/AdminList";
 import ComplaintManage from "@/components/administrator/ComplaintManage";
 import RepairManage from "@/components/administrator/RepairManage";
+import CostEntry from "@/components/administrator/CostEntry";
 
 Vue.use(Router)
 
@@ -94,6 +95,11 @@ export default new Router({
           path: '/index/registerVerify',
           name: '用户注册审核',
           component: RegisterVerify
+        },
+        {
+          path: '/index/costEntry',
+          name: '费用录入',
+          component: CostEntry
         },
         {
           path: '/index/complaintManage',

@@ -18,11 +18,14 @@
               <el-form-item label="报修状态">
                 <span>{{ props.row.complaintStatus }}</span>
               </el-form-item>
-              <el-form-item label="维修人员">
+              <el-form-item label="处理人">
                 <span>{{ props.row.Handler }}</span>
               </el-form-item>
-              <el-form-item label="维修员备注">
+              <el-form-item label="处理人备注">
                 <span>{{ props.row.Remarks }}</span>
+              </el-form-item>
+              <el-form-item label="处理时间">
+                <span>{{ props.row.date }}</span>
               </el-form-item>
               <el-form-item label="用户反馈">
                 <span>{{ props.row.feedback }}</span>
@@ -45,7 +48,7 @@
             <el-tag :type="scope.row.complaintStatus === '已处理' ? 'primary' : 'danger'" disable-transitions>{{scope.row.complaintStatus}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="Handler" label="维修人员"></el-table-column>
+        <el-table-column prop="Handler" label="处理人"></el-table-column>
       </el-table-column>
       <el-table-column>
         <template slot="header" slot-scope="scope">

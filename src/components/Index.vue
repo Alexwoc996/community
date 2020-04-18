@@ -20,6 +20,7 @@
             <el-menu-item index="/index/adminList">管理员列表</el-menu-item>
             <el-menu-item index="/index/userList">用户列表</el-menu-item>
             <el-menu-item index="/index/registerVerify">注册审核</el-menu-item>
+            <el-menu-item index="/index/costEntry">费用录入</el-menu-item>
             <el-menu-item index="/index/complaintManage">投诉管理</el-menu-item>
             <el-menu-item index="/index/repairManage">报修管理</el-menu-item>
             <el-menu-item index="/index/houseList">楼栋管理</el-menu-item>
