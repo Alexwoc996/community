@@ -93,6 +93,12 @@
         this.dialogVisible = true;
       },
       submitForm(formName) {
+        this.$message({
+          message: '登录成功！',
+          type: 'success',
+          center: true
+        });
+        this.$router.replace('/index/userIndex')
         // this.$refs[formName].validate((valid) => {
         //   if (valid) {
         //     alert('submit!');
@@ -101,30 +107,30 @@
         //     return false;
         //   }
         // });
-        const url="http://127.0.0.1:3002/login"
-        this.$axios.get(url).then(res=>{
-          console.log(res)
-          for(var i = 0; i < res.data.length; i++){
-            if(res.data[i].username == this.ruleForm.username && res.data[i].password == this.ruleForm.password){
-              console.log("正确");
-              this.$message({
-                message: '登录成功！',
-                center: true,
-                type: 'success'
-              });
-              this.loginFlag=true
-              this.$router.push('/index/page1')//实现点击按钮的页面跳转
-            }
-          }
-          if(this.loginFlag == false){
-            this.$message.error({
-              message: '登录失败！请检查账号密码！',
-              center: true
-            });
-          }
-        },error => {
-          console.log(error)
-        })
+        // const url="http://127.0.0.1:3002/login"
+        // this.$axios.get(url).then(res=>{
+        //   console.log(res)
+        //   for(var i = 0; i < res.data.length; i++){
+        //     if(res.data[i].username == this.ruleForm.username && res.data[i].password == this.ruleForm.password){
+        //       console.log("正确");
+        //       this.$message({
+        //         message: '登录成功！',
+        //         center: true,
+        //         type: 'success'
+        //       });
+        //       this.loginFlag=true
+        //       this.$router.push('/index/page1')//实现点击按钮的页面跳转
+        //     }
+        //   }
+        //   if(this.loginFlag == false){
+        //     this.$message.error({
+        //       message: '登录失败！请检查账号密码！',
+        //       center: true
+        //     });
+        //   }
+        // },error => {
+        //   console.log(error)
+        // })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

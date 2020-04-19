@@ -80,23 +80,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col span="8">
-            <el-form-item v-model="radioTreaty" label="车库" prop="garage">
-              <el-radio-group v-model="ruleForm.garage">
-                <el-radio label="1">有</el-radio>
-                <el-radio label="2">无</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col span="8">
-            <el-form-item label="车库号" prop="garageID" v-show="ruleForm.garage == 1">
-              <el-input v-model="ruleForm.garageID"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
           <el-button @click="resetForm('ruleForm')">重置表单</el-button>
@@ -175,7 +158,6 @@
       };
       return {
         userScore:'',
-        radioTreaty:'1',
         overdueDate: '',
         options: [{
           value: 'A1',
@@ -203,8 +185,6 @@
           address2: '',//几几室
           deedID: '',//房产证号
           housekind: '',//房屋性质
-          garage: '',//车库
-          garageID: '',//车库号
         },
         rules: {
           username: [

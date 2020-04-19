@@ -5,7 +5,7 @@
       <el-row>
         <el-col span="8">
           <el-form-item label="姓名" prop="username">
-            <el-input v-model="ruleForm.username" :disabled="true" clearable></el-input>
+            <el-input v-model="ruleForm.username" :disabled="modify" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col span="8">
@@ -17,7 +17,7 @@
       <el-row>
         <el-col span="8">
           <el-form-item label="身份证号" prop="IDcard">
-            <el-input v-model="ruleForm.IDcard" :disabled="true" clearable></el-input>
+            <el-input v-model="ruleForm.IDcard" :disabled="modify"></el-input>
           </el-form-item>
         </el-col>
         <el-col span="8">
@@ -28,42 +28,46 @@
       </el-row>
       <el-row>
         <el-col span="8">
-          <el-form-item label="住所" prop="address">
-            <el-row>
-              <el-col span="12">
-                <el-input v-model="ruleForm.address1" :disabled="true">
-                  <template slot="append">号楼</template>
-                </el-input>
-              </el-col>
-              <el-col span="12">
-                <el-input placeholder="" v-model="ruleForm.address2" :disabled="true">
-                  <template slot="append">室</template>
-                </el-input>
-              </el-col>
-            </el-row>
+          <el-form-item label="性 别" prop="sex">
+            <el-input v-model.number="ruleForm.sex" :disabled="true"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="年 龄" prop="age">
+            <el-input v-model.number="ruleForm.age" :disabled="true"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
-        <el-form-item label="房屋性质" prop="housekind">
-          <el-radio-group v-model="ruleForm.housekind">
-            <el-radio label="buy" :disabled="modify">已购房屋</el-radio>
-            <el-radio label="rent" :disabled="modify">租赁房屋</el-radio>
-          </el-radio-group>
-        </el-form-item>
+        <el-col span="8">
+          <el-form-item label="住 所" prop="address">
+<!--            <el-cascader placeholder="A1号楼/101室" :options="options" clearable :disabled="true"></el-cascader>-->
+            <el-input v-model="address" placeholder="A1号楼/101室" :disabled="true" clearable></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="户 型">
+            <el-input v-model="houseKind" placeholder="三居室" :disabled="true" clearable></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="面 积">
+            <el-input v-model="houseKind" placeholder="120m²" :disabled="true" clearable></el-input>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row>
         <el-col span="8">
-          <el-form-item v-model="radioTreaty" label="车库" prop="garage">
-            <el-radio-group v-model="ruleForm.garage">
+          <el-form-item v-model="radioTreaty" label="停车位" prop="garage">
+            <el-radio-group v-model="ruleForm.garage" :disabled="true">
               <el-radio label="1" :disabled="modify">有</el-radio>
               <el-radio label="2" :disabled="modify">无</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
         <el-col span="8">
-          <el-form-item label="车库号" prop="garageID" v-show="this.ruleForm.garage == 1">
-            <el-input v-model="ruleForm.garageID" :disabled="modify"></el-input>
+          <el-form-item label="车位号" prop="garageID" v-show="this.ruleForm.garage == 1" >
+            <el-input v-model="ruleForm.garageID" :disabled="true"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -213,6 +217,19 @@
         }
       };
       return {
+        options: [{
+          value: 'A1',
+          label: 'A1号楼',
+          children: [{value: 'A1101', label: '101室'},{value: 'A1102', label: '102室'},{value: 'A1103', label: '103室'},]
+        },{
+          value: 'A2',
+          label: 'A2号楼',
+          children: [{value: 'A2101', label: '101室'},{value: 'A2102', label: '102室'},{value: 'A2103', label: '103室'},]
+        },{
+          value: 'A3',
+          label: 'A3号楼',
+          children: [{value: 'A3101', label: '101室'},{value: 'A3102', label: '102室'},{value: 'A3103', label: '103室'},]
+        }],
         tableData: [{name: '王大虎', relationship:'本人', phoneNumber:'13599999999', age:'35', sex:'男', IDcard:'370522197402201872'},
                     {name: '王虎妻', relationship:'配偶', phoneNumber:'13599999999', age:'33', sex:'女', IDcard:'370522197402201872'},
                     {name: '王小虎', relationship:'父子', phoneNumber:'13599999999', age:'18', sex:'男', IDcard:'370522197402201872'}],
@@ -228,13 +245,12 @@
         ruleForm: {
           username: '',//用户名
           phonenumber:'',//手机号
-          email: '',//邮箱
+          email: '238476238@qq.com',//邮箱
           IDcard: '',//身份证号
-          address1: '',//几号楼
-          address2: '',//几几室
-          housekind: '',//房屋性质
-          garage: '',//车库
-          garageID: '',//车库号
+          sex: '男',
+          age: '30岁',
+          garage: '1',//车库
+          garageID: '301',//车库号
           oldPassword:'',
           newPassword:'',
           confirmNewPassword:'',

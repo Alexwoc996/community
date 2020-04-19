@@ -38,14 +38,16 @@
         <el-table-column label="工号" prop="adminID" sortable></el-table-column>
         <el-table-column label="姓名" prop="name"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
+      </el-table-column>
+      <el-table-column>
+        <template slot="header" slot-scope="scope">
+          <el-button size="mini" type="primary">添加管理员</el-button>
+        </template>
         <el-table-column label="手机号" prop="phone"></el-table-column>
       </el-table-column>
       <el-table-column>
         <template slot="header" slot-scope="scope">
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="输入管理员姓名搜索"/>
+          <el-input v-model="search" size="mini" placeholder="输入管理员姓名搜索"/>
         </template>
         <el-table-column label="身份证号" prop="IDcard"></el-table-column>
       </el-table-column>

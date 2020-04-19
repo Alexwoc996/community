@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from "@/components/Index";
+import Index2 from "@/components/Index2";
 import PageOne from "@/components/PageOne";
 import PageTwo from "@/components/PageTwo";
 import PageThree from "@/components/PageThree";
 import PageFour from "@/components/PageFour";
+import Login from "@/components/Login";
 
 import LoginForm from "@/components/user/LoginForm";
 import RegisterForm from "@/components/user/RegisterForm";
@@ -29,6 +31,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: '登录界面',
+      component: Login
+    },
+    {
+      path: '/index',
       name: '普通用户界面',
       component: Index,
       redirect:'/index/userIndex',
@@ -72,67 +79,68 @@ export default new Router({
       ]
     },
     {
-      path: '/navigation',
+      path: '/index2',
       name: '管理员界面',
-      component: Index,
+      component: Index2,
+      redirect:'/index2/adminIndex',
       children: [
         {
-          path: '/index/adminIndex',
+          path: '/index2/adminIndex',
           name: '管理员首页',
           component: AdminIndex
         },
         {
-          path: '/index/adminList',
+          path: '/index2/adminList',
           name: '管理员列表',
           component: AdminList
         },
         {
-          path: '/index/userList',
+          path: '/index2/userList',
           name: '用户列表',
           component: UserList
         },
         {
-          path: '/index/registerVerify',
+          path: '/index2/registerVerify',
           name: '用户注册审核',
           component: RegisterVerify
         },
         {
-          path: '/index/costEntry',
+          path: '/index2/costEntry',
           name: '费用录入',
           component: CostEntry
         },
         {
-          path: '/index/complaintManage',
+          path: '/index2/complaintManage',
           name: '投诉管理',
           component: ComplaintManage
         },
         {
-          path: '/index/repairManage',
+          path: '/index2/repairManage',
           name: '报修管理',
           component: RepairManage
         },
         {
-          path: '/index/houseList',
+          path: '/index2/houseList',
           name: '楼栋管理',
           component: HouseList
         },
         {
-          path: '/index/page1',
+          path: '/index2/page1',
           name: '页面1',
           component: PageOne
         },
         {
-          path: '/index/page2',
+          path: '/index2/page2',
           name: '页面2',
           component: PageTwo
         },
         {
-          path: '/index/page3',
+          path: '/index2/page3',
           name: '页面3',
           component: PageThree
         },
         {
-          path: '/index/page4',
+          path: '/index2/page4',
           name: '页面4',
           component: PageFour
         }
