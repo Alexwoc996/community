@@ -47,18 +47,26 @@
               <el-table-column prop="money" label="金额"></el-table-column>
               <el-table-column prop="amount" label="用量"></el-table-column>
               <el-table-column prop="paymentStatus" label="缴费状态"></el-table-column>
+              <el-table-column prop="paymentDate" label="缴费日期"></el-table-column>
             </el-table-column>
             <el-table-column>
               <template slot="header" slot-scope="scope">
                   <el-date-picker v-model="paymentTime" type="month" placeholder="查看其他时间"></el-date-picker>
                   <el-button type="primary">查询</el-button>
               </template>
-              <el-table-column prop="paymentDate" label="缴费日期"></el-table-column>
+
               <el-table-column prop="fine" label="滞纳金"></el-table-column>
               <el-table-column prop="tag" label="类别" :filters="labelList"
                                :filter-method="filterTag" filter-placement="bottom-end">
                 <template slot-scope="scope">
                   <el-tag :type="scope.row.tag === 'primary'" disable-transitions>{{scope.row.tag}}</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-popconfirm title="确定该用户已缴纳费用吗？" @onConfirm="handleEdit(scope.$index, scope.row)">
+                    <el-button size="mini" slot="reference" type="primary">缴费确认</el-button>
+                  </el-popconfirm>
                 </template>
               </el-table-column>
             </el-table-column>
@@ -118,12 +126,6 @@
                   <template slot="append">立方</template>
                 </el-input>
               </el-form-item>
-              <el-form-item label="停车位" :label-width="formLabelWidth">
-                <el-radio-group v-model="usePark">
-                  <el-radio label="noPark">未使用停车位</el-radio>
-                  <el-radio label="park">使用停车位</el-radio>
-                </el-radio-group>
-              </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
               <el-button @click="costFormVisible = false">取 消</el-button>
@@ -145,7 +147,6 @@
         formLabelWidth: '100px',
         userInfoFormVisible: false,
         paymentTime: '',
-        usePark: '',
         paymentTableData: [{date: '2020-04-11', name: '张三', money: '50', amount: '100瓦', paymentStatus: '已缴费', paymentDate: '2020-04-11', fine: '0', tag: '电费'},
           {date: '2020-04-11', name: '张三', money: '45', amount: '56立方', paymentStatus: '已缴费', paymentDate: '2020-04-11', fine: '0', tag: '水费'},
           {date: '2020-04-11', name: '张三', money: '50', amount: '78立方', paymentStatus: '已缴费', paymentDate: '2020-04-11', fine: '0', tag: '燃气费'},

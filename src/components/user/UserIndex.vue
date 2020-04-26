@@ -1,20 +1,59 @@
 <template>
   <div>
     <el-row :gutter="20" type="flex" justify="space-between">
-      <el-col :span="16">
+      <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>消息提醒</span>
             <el-button style="float: right; padding: 3px 0" type="text">全部已读</el-button>
           </div>
-          <div v-for="o in 2" :key="o" class="text item">
-            <i class="el-icon-circle-check"></i>
-            {{'未读消息 ' + o }}
-          </div>
-          <div v-for="o in 2" :key="o" class="text item">
+          <div>
             <i class="el-icon-success"></i>
-            {{'已读消息 ' + o }}
+            <el-button type="text">您的投诉信息已被处理</el-button>
           </div>
+          <div>
+            <i class="el-icon-success"></i>
+            <el-button type="text">您的报修信息已被处理</el-button>
+          </div>
+          <div>
+            <i class="el-icon-success"></i>
+            <el-button type="text">本月缴费信息已出，请及时缴费</el-button>
+          </div>
+          <div>
+            <i class="el-icon-success"></i>
+            <el-button type="text">有新的全站通知，请注意查看</el-button>
+          </div>
+
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>停车位租赁</span>
+          </div>
+          <el-form>
+            <el-form-item label="选择停车位">
+              <el-row type="flex" justify="space-around">
+                <el-select v-model="value" filterable placeholder="请选择">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-row>
+            </el-form-item>
+            <el-form-item>
+              <el-row type="flex" justify="space-around">
+                <el-popconfirm title="确定要租赁该停车位吗？">
+                  <el-button type="primary" slot="reference">提 交</el-button>
+                </el-popconfirm>
+              </el-row>
+
+            </el-form-item>
+          </el-form>
+
         </el-card>
       </el-col>
       <el-col :span="8">
@@ -29,9 +68,8 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row>
-      <div id="echarts" style="width: 100%;height:400px;"></div>
-    </el-row>
+    <br>
+    <div id="echarts" style="width: 100%;height:400px;"></div>
 
   </div>
 </template>
@@ -41,6 +79,23 @@
         name: "UserIndex",
       data(){
         return{
+          options: [{
+            value: '101',
+            label: '101'
+          }, {
+            value: '102',
+            label: '102'
+          }, {
+            value: '103',
+            label: '103'
+          }, {
+            value: '104',
+            label: '104'
+          }, {
+            value: '105',
+            label: '105'
+          }],
+          value: '',
           time: '',//日期时间
           weatherDate: {
             cityid: "",//城市id

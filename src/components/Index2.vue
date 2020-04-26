@@ -6,14 +6,15 @@
         <el-menu router :default-openeds="['1']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-menu"></i>管理员界面</template>
-            <el-menu-item index="/index/adminIndex">管理员首页</el-menu-item>
-            <el-menu-item index="/index/adminList">管理员列表</el-menu-item>
-            <el-menu-item index="/index/userList">用户列表</el-menu-item>
-            <el-menu-item index="/index/registerVerify">注册审核</el-menu-item>
-            <el-menu-item index="/index/costEntry">费用录入</el-menu-item>
-            <el-menu-item index="/index/complaintManage">投诉管理</el-menu-item>
-            <el-menu-item index="/index/repairManage">报修管理</el-menu-item>
-            <el-menu-item index="/index/houseList">楼栋管理</el-menu-item>
+            <el-menu-item index="/index2/adminIndex">管理员首页</el-menu-item>
+            <el-menu-item index="/index2/adminList">管理员列表</el-menu-item>
+            <el-menu-item index="/index2/userList">用户列表</el-menu-item>
+            <el-menu-item index="/index2/houseList">楼栋管理</el-menu-item>
+            <el-menu-item index="/index2/parkManage">停车位管理</el-menu-item>
+            <el-menu-item index="/index2/registerVerify">注册审核</el-menu-item>
+            <el-menu-item index="/index2/costEntry">费用信息维护</el-menu-item>
+            <el-menu-item index="/index2/complaintManage">投诉管理</el-menu-item>
+            <el-menu-item index="/index2/repairManage">报修管理</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -29,7 +30,7 @@
                 <el-dropdown>
                   <i class="el-icon-setting" style="margin-right: 15px"></i>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="gotoAdminInfo">个人信息</el-dropdown-item>
+                    <el-dropdown-item @click.native="gotoAdminList">个人信息</el-dropdown-item>
                     <el-dropdown-item @click.native="gotoLogin">退出登录</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -59,8 +60,8 @@
       gotoLogin(){
         this.$router.replace('/')
       },
-      gotoAdminInfo(){
-        this.$router.replace('/index2/adminInfo')
+      gotoAdminList(){
+        this.$router.replace('/index2/adminList')
       },
       getHeight(){
         this.height.height=window.innerHeight-16+'px';

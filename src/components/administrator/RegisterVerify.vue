@@ -28,15 +28,6 @@
             <el-form-item label="注册日期">
               <span>{{ props.row.registerDate }}</span>
             </el-form-item>
-            <el-form-item label="房屋性质">
-              <span>{{ props.row.housekind }}</span>
-            </el-form-item>
-            <el-form-item label="有无车库">
-              <span>{{ props.row.garage }}</span>
-            </el-form-item>
-            <el-form-item label="车库号">
-              <span>{{ props.row.garageID }}</span>
-            </el-form-item>
           </el-form>
         </template>
       </el-table-column>
@@ -83,9 +74,6 @@
           IDcard: '873467868273648456',
           phone: '13500000000',
           email: '123456@qq.com',
-          housekind: '买房',
-          garage: '有',
-          garageID: '301',
           registerDate: '2020-3-4',
           deedID: '23423423432'
 
@@ -95,9 +83,7 @@
           IDcard: '873467868273648456',
           phone: '13500000000',
           email: '123456@qq.com',
-          housekind: '买房',
-          garage: '有',
-          garageID: '301',
+
           registerDate: '2020-3-4',
           deedID: '4358347534'
 
@@ -108,9 +94,6 @@
           IDcard: '873467868273648456',
           phone: '13500000000',
           email: '123456@qq.com',
-          housekind: '买房',
-          garage: '有',
-          garageID: '301',
           registerDate: '2020-3-4',
           deedID: '345345324'
 
@@ -121,9 +104,6 @@
           IDcard: '873467868273648456',
           phone: '13500000000',
           email: '123456@qq.com',
-          housekind: '买房',
-          garage: '有',
-          garageID: '301',
           registerDate: '2020-3-4',
           deedID: '3453253245'
         }],

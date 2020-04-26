@@ -6,7 +6,7 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-table :data="tableData2.filter(data => !search || data.houseID.toLowerCase().includes(search.toLowerCase()))"
-              stripe border height="500" style="width: 100%">
+              stripe border style="width: 100%">
               <el-table-column label="该楼栋下房屋信息">
                 <el-table-column label="房屋号" prop="houseID"></el-table-column>
                 <el-table-column label="户型" prop="houseKind"></el-table-column>
@@ -18,35 +18,35 @@
                 <template slot="header" slot-scope="scope">
                   <el-input v-model="search" size="mini" placeholder="输入房屋号搜索"/>
                 </template>
-                <el-table-column label="身份证号" prop="IDcard"></el-table-column>
+                <el-table-column label="身份证号" prop="IDcard" width="200%"></el-table-column>
+              </el-table-column>
+              <el-table-column>
+                <template slot="header" slot-scope="scope">
+                  <el-button size="mini" type="primary" @click="addAdminFormVisible = true">添加房屋信息</el-button>
+                </template>
+                <el-table-column label="操作">
+                  <template slot-scope="scope2">
+                    <el-button size="mini" type="primary" @click="handleEdit(scope2.$index, scope.row)">编辑</el-button>
+                    <el-button size="mini" type="danger" @click="handleDelete(scope2.$index, scope.row)">删除</el-button>
+                  </template>
+                </el-table-column>
               </el-table-column>
             </el-table>
           </template>
       </el-table-column>
         <el-table-column prop="houseID" label="楼号"></el-table-column>
         <el-table-column prop="position" label="位置"></el-table-column>
-        <el-table-column prop="units" label="单元数"></el-table-column>
         <el-table-column prop="floors" label="层数"></el-table-column>
         <el-table-column prop="cells" label="房间数"></el-table-column>
-
+      </el-table-column>
+      <el-table-column>
+        <template slot="header" slot-scope="scope">
+          <el-button size="mini" type="primary" @click="addAdminFormVisible = true">添加建筑信息</el-button>
+        </template>
         <el-table-column label="操作">
           <template slot-scope="scope2">
             <el-button size="mini" type="primary" @click="handleEdit(scope2.$index, scope.row)">编辑</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope2.$index, scope.row)">删除</el-button>
-            <el-dialog title="报修处理" :visible.sync="handleFormVisible" :close-on-click-modal="false">
-              <el-form>
-                <el-form-item><p>请确认该报修已处理完成后再提交！</p></el-form-item>
-                <el-form-item label="备注" :label-width="formLabelWidth">
-                  <el-input type="textarea" :rows="2" placeholder="请输入处理备注"v-model="feedbackContent" autocomplete="off" style="height: 50px"></el-input>
-                </el-form-item>
-
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="handleFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="handleFormVisible = false">确 定</el-button>
-              </div>
-            </el-dialog>
-
           </template>
         </el-table-column>
       </el-table-column>

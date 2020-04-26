@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>费用录入</h1>
+      <h1>费用信息维护</h1>
       <el-table ref="filterTable" :data="tableData" border>
         <el-table-column label="费用基本信息">
           <el-table-column label="水费(元/立方)" prop="water"></el-table-column>

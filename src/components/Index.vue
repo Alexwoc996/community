@@ -7,8 +7,6 @@
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>普通用户界面</template>
             <el-menu-item index="/index/userIndex">用户首页</el-menu-item>
-            <el-menu-item index="/index/loginform">登录界面</el-menu-item>
-            <el-menu-item index="/index/registerform">注册界面</el-menu-item>
             <el-menu-item index="/index/userInfo">用户个人信息</el-menu-item>
             <el-menu-item index="/index/userPaymentInfo">缴费信息</el-menu-item>
             <el-menu-item index="/index/userComplaint">投诉信息</el-menu-item>

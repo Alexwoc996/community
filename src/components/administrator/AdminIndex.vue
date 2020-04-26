@@ -28,14 +28,15 @@
             <span>消息提醒</span>
             <el-button style="float: right; padding: 3px 0" type="text">全部已读</el-button>
           </div>
-          <div v-for="o in 2" :key="o" class="text item">
-            <i class="el-icon-circle-check"></i>
-            {{'未读消息 ' + o }}
-          </div>
-          <div v-for="o in 2" :key="o" class="text item">
-            <i class="el-icon-success"></i>
-            {{'已读消息 ' + o }}
-          </div>
+          <el-row type="flex" justify="space-around">
+            <el-button type="text" @click="this.$router.replace('/index2/userList')">4条待处理的注册申请</el-button>
+            <el-button type="text">5条待处理的投诉信息</el-button>
+          </el-row>
+          <el-row type="flex" justify="space-around">
+            <el-button type="text">3条待处理的报修信息</el-button>
+            <el-button type="text">56个待录入的缴费信息</el-button>
+          </el-row>
+
         </el-card>
       </el-col>
       <el-col :span="8">
@@ -50,7 +51,8 @@
         </el-card>
       </el-col>
     </el-row>
-
+    <br>
+    <div id="echarts" style="width: 100%;height:400px;"></div>
   </div>
 </template>
 
@@ -134,10 +136,61 @@
             this.weatherDate.air = reponse.data.air;
           }).catch(()=>{})
       },
+      init(){
+        var myChart = this.$echarts.init(document.getElementById('echarts'));
+        var option = {
+          title: {
+            text: '考勤统计',
+            // subtext: '数据来自网络'
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          legend: {
+            data: ['出勤次数', '迟到次数', '早退次数']
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+          },
+          yAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+          },
+          xAxis: {
+            type: 'category',
+            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10', '11月', '12月',]
+          },
+          series: [
+            {
+              name: '出勤次数',
+              type: 'bar',
+              data: [31, 28, 31, 30, 31, 31, 31, 31, 31, 31, 31, 31]
+            },
+            {
+              name: '迟到次数',
+              type: 'bar',
+              data: [1, 2, 0, 1, 2, 2, 2, 1, 0, 1, 0, 1]
+            },
+            {
+              name: '早退次数',
+              type: 'bar',
+              data: [3, 1, 2, 3, 1, 0, 2, 6, 1, 2, 1, 0]
+            }
+          ]
+        };
+        myChart.setOption(option);
+      },
     },
     mounted() {
       let that = this;
-      that.getWeather()
+      that.getWeather();
+      that.init();
     }
   }
 </script>

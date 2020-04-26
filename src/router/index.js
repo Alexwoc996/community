@@ -24,6 +24,7 @@ import AdminList from "@/components/administrator/AdminList";
 import ComplaintManage from "@/components/administrator/ComplaintManage";
 import RepairManage from "@/components/administrator/RepairManage";
 import CostEntry from "@/components/administrator/CostEntry";
+import ParkManage from "@/components/administrator/ParkManage";
 
 Vue.use(Router)
 
@@ -123,6 +124,11 @@ export default new Router({
           path: '/index2/houseList',
           name: '楼栋管理',
           component: HouseList
+        },
+        {
+          path: '/index2/parkManage',
+          name: '停车位管理',
+          component: ParkManage
         },
         {
           path: '/index2/page1',

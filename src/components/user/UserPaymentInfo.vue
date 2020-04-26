@@ -1,10 +1,24 @@
 <template>
   <div>
     <h1>用户缴费信息</h1>
+    <el-table ref="filterTable" :data="tableData2" border>
+      <el-table-column label="本期缴费比例">
+        <el-table-column label="水费(元/立方)" prop="water"></el-table-column>
+        <el-table-column label="水费滞纳金(%)" prop="waterFine"></el-table-column>
+        <el-table-column label="电费(元/度)" prop="electricity"></el-table-column>
+        <el-table-column label="电费滞纳金(%)" prop="electricityFine"></el-table-column>
+        <el-table-column label="燃气费(元/立方)" prop="gas"></el-table-column>
+        <el-table-column label="燃气费滞纳金(%)" prop="gasFine"></el-table-column>
+        <el-table-column label="停车费(元/月)" prop="park"></el-table-column>
+        <el-table-column label="停车费滞纳金(%)" prop="parkFine"></el-table-column>
+        <el-table-column label="物业费(元/平)" prop="property"></el-table-column>
+        <el-table-column label="物业费滞纳金(%)" prop="propertyFine"></el-table-column>
+      </el-table-column>
+    </el-table>
+    <br>
     <el-table ref="filterTable" :data="tableData" style="width: 100%" border>
       <el-table-column label="用户缴费信息">
-        <el-table-column prop="date" label="出账日期" column-key="date"
-                         :filters="dateList" :filter-method="filterHandler">
+        <el-table-column prop="date" label="出账日期" >
         </el-table-column>
         <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column prop="money" label="金额"></el-table-column>
@@ -39,10 +53,11 @@
           {date: '2020-04-11', name: '张三', money: '50', amount: '78立方', paymentStatus: '已缴费', paymentDate: '2020-04-11', fine: '0', tag: '燃气费'},
           {date: '2020-04-11', name: '张三', money: '250', amount: '120平', paymentStatus: '已缴费', paymentDate: '2020-04-11', fine: '0', tag: '物业费'},
           {date: '2020-04-11', name: '张三', money: '300', amount: '1月', paymentStatus: '已缴费', paymentDate: '2020-04-12', fine: '15', tag: '停车费'}],
-        dateList: [],
         labelList: [{text: '电费', value:'电费'},{text: '水费', value:'水费'},{text: '燃气费', value:'燃气费'},{text: '物业费', value:'物业费'},{text: '停车费', value:'停车费'},],
         search: '',
         paymentTime: '',
+        tableData2:[{water: '2', waterFine: '5', electricity: '0.6', electricityFine: '5',
+          gas: '5', gasFine: '5', park: '300', parkFine: '5', property: '30', propertyFine: '5'}]
       }
     },
     mounted() {
